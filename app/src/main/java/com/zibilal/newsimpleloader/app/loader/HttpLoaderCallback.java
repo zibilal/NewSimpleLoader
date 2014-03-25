@@ -20,7 +20,7 @@ public class HttpLoaderCallback implements LoaderManager.LoaderCallbacks<List<PO
 
     @Override
     public void onLoadFinished(Loader<List<POIItem>> loader, List<POIItem> data) {
-
+        //// testsdfad
     }
 
     @Override

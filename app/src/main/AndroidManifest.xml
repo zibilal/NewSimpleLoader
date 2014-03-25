@@ -20,6 +20,18 @@
             android:name="com.zibilal.newsimpleloader.app.DummyActivity"
             android:label="@string/title_activity_dummy" >
         </activity>
+        <activity
+            android:name="com.zibilal.newsimpleloader.app.DoubleDrawerActivity"
+            android:label="@string/title_activity_double_drawer" >
+        </activity>
+        <activity
+            android:name="com.zibilal.newsimpleloader.app.SingleDrawerLayout"
+            android:label="@string/title_activity_single_drawer_layout" >
+        </activity>
+        <activity
+            android:name="com.zibilal.newsimpleloader.app.TryoutHttpClientActivity"
+            android:label="@string/title_activity_tryout_http_client" >
+        </activity>
     </application>
 
 </manifest>

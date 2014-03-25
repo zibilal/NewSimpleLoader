@@ -32,4 +32,31 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="43dp" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Double Drawer"
+        android:id="@+id/button_double_drawer"
+        android:layout_centerVertical="true"
+        android:layout_alignLeft="@+id/button_single_drawer"
+        android:layout_alignStart="@+id/button_single_drawer" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Single Drawer"
+        android:id="@+id/button_single_drawer"
+        android:layout_marginTop="36dp"
+        android:layout_below="@+id/button_double_drawer"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/test_http"
+        android:id="@+id/button_test_http"
+        android:layout_below="@+id/button_single_drawer"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="34dp" />
+
 </RelativeLayout>

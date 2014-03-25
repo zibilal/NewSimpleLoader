@@ -14,6 +14,9 @@ public class MainActivity extends ActionBarActivity {
     private Button activity1;
     private Button activity2;
 
+    private Button singleDrawer;
+    private Button httpTest;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,6 +24,8 @@ public class MainActivity extends ActionBarActivity {
 
         activity1 = (Button) findViewById(R.id.button_act1);
         activity2 = (Button) findViewById(R.id.button_act2);
+        singleDrawer = (Button) findViewById(R.id.button_single_drawer);
+        httpTest = (Button) findViewById(R.id.button_test_http);
 
         activity1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -34,6 +39,22 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, DummyActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        singleDrawer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, SingleDrawerLayout.class);
+                startActivity(intent);
+            }
+        });
+
+        httpTest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, TryoutHttpClientActivity.class);
                 startActivity(intent);
             }
         });
