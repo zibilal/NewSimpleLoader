@@ -11,7 +11,5 @@ import java.io.OutputStream;
  */
 public interface DataHttpModel extends Parcelable {
 
-    public OutputStream toPostData();
     public JSONObject toJSON();
-
 }

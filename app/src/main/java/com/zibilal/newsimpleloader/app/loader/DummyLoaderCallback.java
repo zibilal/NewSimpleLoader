@@ -35,7 +35,7 @@ public class DummyLoaderCallback implements LoaderManager.LoaderCallbacks<List<S
     public Loader<List<String>> onCreateLoader(int id, Bundle args) {
         Log.d(TAG, "******* On Create Loader, Id " + id);
         mTaskLoader = new DummyTaskLoader(mContext, "Loader " + (++COUNTER) );
-        //mTaskLoader.start();
+        mTaskLoader.start();
         return mTaskLoader;
     }
 

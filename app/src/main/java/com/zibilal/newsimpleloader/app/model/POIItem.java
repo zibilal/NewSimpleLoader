@@ -3,10 +3,14 @@ package com.zibilal.newsimpleloader.app.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import org.json.JSONObject;
+
+import java.io.OutputStream;
+
 /**
  * Created by bmuhamm on 3/11/14.
  */
-public class POIItem implements Parcelable{
+public class POIItem implements DataHttpModel{
 
     private int id;
     private String name;
@@ -70,5 +74,10 @@ public class POIItem implements Parcelable{
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Override
+    public JSONObject toJSON() {
+        return null;
     }
 }

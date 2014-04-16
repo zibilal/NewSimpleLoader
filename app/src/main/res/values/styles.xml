@@ -5,4 +5,35 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="ListView" parent="@android:style/Widget.ListView">
+        <item name="android:background">@color/lighter_gray</item>
+        <item name="android:cacheColorHint">@android:color/transparent</item>
+        <item name="android:divider">@android:color/transparent</item>
+        <item name="android:dividerHeight">0dp</item>
+        <item name="android:listSelector">@drawable/list_item_selector</item>
+    </style>
+
+    <style name="TitleFont" parent="@android:style/Widget.TextView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/lighter_black</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/title_text_size</item>
+    </style>
+
+    <style name="SubtitleFont" parent="@android:style/Widget.TextView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/lighter_black</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/subtitle_text_size</item>
+    </style>
+
+    <style name="NormalFont" parent="@android:style/Widget.TextView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/lighter_black</item>
+        <item name="android:textSize">@dimen/normal_text_size</item>
+    </style>
+
 </resources>
