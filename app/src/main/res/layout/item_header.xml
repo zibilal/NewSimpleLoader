@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="256dp"
+    android:id="@+id/header_item">
+    <ImageView
+        android:id="@+id/thumbnail_header"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/default_image"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignBaseline="@+id/thumbnail_header"
+        android:layout_gravity="bottom"
+        android:background="#30000000"
+        android:paddingTop="12dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="4dp"
+        android:paddingBottom="4dp">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Title Text"
+            android:id="@+id/title_header"
+            android:paddingBottom="4dp"
+            style="@style/TitleHeaderFont" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Subtitle Text"
+            android:id="@+id/subtitle_header"
+            style="@style/SubtitleHeaderFont"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/lorem_ipsum"
+            android:id="@+id/description_header"
+            android:maxLength="100"
+            android:ellipsize="end"
+            style="@style/NormalHeaderFont"/>
+    </LinearLayout>
+</FrameLayout>

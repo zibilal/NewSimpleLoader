@@ -14,49 +14,13 @@
         android:layout_height="wrap_content"
         android:id="@+id/textView" />
 
-    <Button
+    <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Dummy Activity 1"
-        android:id="@+id/button_act1"
+        android:id="@+id/list_view"
         android:layout_below="@+id/textView"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="41dp" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Dummy Activity 2"
-        android:id="@+id/button_act2"
-        android:layout_below="@+id/button_act1"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="43dp" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Double Drawer"
-        android:id="@+id/button_double_drawer"
-        android:layout_centerVertical="true"
-        android:layout_alignLeft="@+id/button_single_drawer"
-        android:layout_alignStart="@+id/button_single_drawer" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Single Drawer"
-        android:id="@+id/button_single_drawer"
-        android:layout_marginTop="36dp"
-        android:layout_below="@+id/button_double_drawer"
-        android:layout_centerHorizontal="true" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/test_http"
-        android:id="@+id/button_test_http"
-        android:layout_below="@+id/button_single_drawer"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="34dp" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="49dp" />
 
 </RelativeLayout>

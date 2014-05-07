@@ -1,9 +1,11 @@
 package com.zibilal.newsimpleloader.app.model;
 
+import com.zibilal.newsimpleloader.app.list.adapter.ThumbnailedAdapterHelper;
+
 /**
  * Created by bmuhamm on 4/16/14.
  */
-public class Entry {
+public class Entry implements ThumbnailedAdapterHelper.IDataAdapter {
     private String title;
     private String link;
     private String summary;
@@ -16,6 +18,36 @@ public class Entry {
 
     public String getTitle() {
         return title;
+    }
+
+    @Override
+    public void setSubtitle(String subtitle) {
+        setLink(subtitle);
+    }
+
+    @Override
+    public String getSubtitle() {
+        return getLink();
+    }
+
+    @Override
+    public void setThumbnailUrl(String url) {
+
+    }
+
+    @Override
+    public String getThumbnailUrl() {
+        return null;
+    }
+
+    @Override
+    public void setDescription(String description) {
+        setSummary(description);
+    }
+
+    @Override
+    public String getDescription() {
+        return getSummary();
     }
 
     public void setTitle(String title) {

@@ -3,6 +3,7 @@
 
     <string name="app_name">NewSimpleLoader</string>
     <string name="hello_world">Hello world!</string>
+    <string name="consumeapitest1_title">Consume API Test 1</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_dummy">DummyActivity</string>
     <string name="title_activity_double_drawer">DoubleDrawerActivity</string>
@@ -12,8 +13,12 @@
     <string name="test_http">Test Http</string>
     <string name="title_activity_tryout_http_client">TryoutHttpClientActivity</string>
     <string name="button_cek1">Button Cek 1</string>
-    <string name="lorem_ipsum">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-    </string>
+    <string name="lorem_ipsum">        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</string>
+    <string name="title_activity_consume_apitest1">ConsumeAPITest1Activity</string>
+    <string name="neque_porro">Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...</string>
+    <string name="title_activity_screen_slide">ScreenSlideActivity</string>
+    <string name="title_activity_image">ImageActivity</string>
+    <string name="title_activity_gesture_fun">GestureFunActivity</string>
+    <string name="title_activity_extended_view_pager_test">ExtendedViewPagerTestActivity</string>
 
 </resources>

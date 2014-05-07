@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.zibilal.newsimpleloader.app" >
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -29,8 +31,27 @@
             android:label="@string/title_activity_single_drawer_layout" >
         </activity>
         <activity
-            android:name="com.zibilal.newsimpleloader.app.TryoutHttpClientActivity"
-            android:label="@string/title_activity_tryout_http_client" >
+            android:name="com.zibilal.newsimpleloader.app.ConsumeAPITest1Activity"
+            android:label="@string/title_activity_consume_apitest1" >
+        </activity>
+        <activity
+            android:name="com.zibilal.newsimpleloader.app.ScreenSlideActivity"
+            android:label="@string/title_activity_screen_slide" >
+        </activity>
+        <activity
+            android:name="com.zibilal.newsimpleloader.app.PagerActivity"
+            android:label="PagerActivity" />
+        <activity
+            android:name="com.zibilal.newsimpleloader.app.ImageActivity"
+            android:label="@string/title_activity_image" >
+        </activity>
+        <activity
+            android:name="com.zibilal.newsimpleloader.app.GestureFunActivity"
+            android:label="@string/title_activity_gesture_fun" >
+        </activity>
+        <activity
+            android:name="com.zibilal.newsimpleloader.app.ExtendedViewPagerTestActivity"
+            android:label="@string/title_activity_extended_view_pager_test" >
         </activity>
     </application>
 
