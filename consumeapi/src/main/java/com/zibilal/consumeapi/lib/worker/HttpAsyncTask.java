@@ -5,6 +5,10 @@ import android.util.Log;
 
 import com.zibilal.consumeapi.lib.network.HttpClient;
 import com.zibilal.consumeapi.lib.network.Response;
+import com.zibilal.consumeapi.lib.persistence.CacheObject;
+import com.zibilal.consumeapi.lib.persistence.CacheObjectHelper;
+
+import java.util.List;
 
 
 /**
@@ -18,10 +22,15 @@ public class HttpAsyncTask extends AsyncTask<String, Integer, Response> {
 
     private boolean mNeedAuthentication;
 
-    public HttpAsyncTask(OnPostExecute postExecute, Class<? extends Response> responseClass, boolean needAuthentication){
+    private CacheObjectHelper mCacheObjectHelper;
+    private String mKeyword;
+
+    public HttpAsyncTask(OnPostExecute postExecute, Class<? extends Response> responseClass, boolean needAuthentication, CacheObjectHelper cacheObjectHelper, String keyword){
         callback = postExecute;
         mResponseClass = responseClass;
         mNeedAuthentication = needAuthentication;
+        mCacheObjectHelper=cacheObjectHelper;
+        mKeyword=keyword;
     }
 
     @Override
@@ -35,20 +44,52 @@ public class HttpAsyncTask extends AsyncTask<String, Integer, Response> {
             url = strings[0];
             type = HttpClient.JSON_TYPE;
         }
-        try{
-            HttpClient httpClient = new HttpClient(mNeedAuthentication);
-            Response response;
-            if(type.equals(HttpClient.XML_TYPE)) {
-                response = (Response) httpClient.getXml(url, mResponseClass);
-            } else if(type.equals(HttpClient.BYTE_TYPE)) {
-                response = (Response) httpClient.getBytes(url, mResponseClass);
-            } else {
-                response = (Response) httpClient.getJson(url, mResponseClass);
-            }
-            return response;
 
-        } catch (Exception e) {
-            Log.e(TAG, "Exception occured: " + e.getMessage());
+        boolean loadFromHttp;
+
+        if(mCacheObjectHelper != null && mKeyword != null) {
+
+            final List<CacheObject> list = mCacheObjectHelper.getCache(mKeyword);
+
+            if(list!=null && list.size() > 0) {
+                loadFromHttp=false;
+
+                Response response = new Response() {
+                    @Override
+                    public Object responseData() {
+                        return list;
+                    }
+                };
+
+                return response;
+
+            } else {
+                loadFromHttp=true;
+            }
+
+        } else {
+            loadFromHttp=true;
+        }
+
+        if(loadFromHttp) {
+            try {
+                HttpClient httpClient = new HttpClient(mNeedAuthentication);
+                Response response;
+                if (type.equals(HttpClient.XML_TYPE)) {
+                    response = (Response) httpClient.getXml(url, mResponseClass);
+                } else if (type.equals(HttpClient.BYTE_TYPE)) {
+                    response = (Response) httpClient.getBytes(url, mResponseClass);
+                } else {
+                    response = (Response) httpClient.getJson(url, mResponseClass);
+                }
+                if(mCacheObjectHelper != null && mKeyword != null) {
+                    mCacheObjectHelper.addCache(mKeyword, response);
+                }
+                return response;
+
+            } catch (Exception e) {
+                Log.e(TAG, "Exception occured: " + e.getMessage());
+            }
         }
         return null;
     }
@@ -62,7 +103,6 @@ public class HttpAsyncTask extends AsyncTask<String, Integer, Response> {
     protected void onPostExecute(Response response) {
         callback.onUpdate(response);
     }
-
 
     public static interface OnPostExecute {
         public void onProgress(Integer i);
