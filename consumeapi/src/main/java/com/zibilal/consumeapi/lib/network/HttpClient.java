@@ -3,6 +3,8 @@ package com.zibilal.consumeapi.lib.network;
 import android.util.Base64;
 
 import com.google.gson.Gson;
+import com.zibilal.consumeapi.lib.persistence.CacheObject;
+import com.zibilal.consumeapi.lib.persistence.CacheObjectHelper;
 import com.zibilal.consumeapi.lib.rawbyte.RawParser;
 import com.zibilal.consumeapi.lib.xml.XmlParser;
 
@@ -13,6 +15,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.List;
 
 /**
  * Created by bmuhamm on 4/2/14.
@@ -32,6 +35,10 @@ public class HttpClient {
     private String mPassword;
 
     private boolean mNeedAuthentication;
+    private boolean mCached;
+
+    private CacheObjectHelper mCacheObjectHelper;
+    private String mKeyword;
 
     public HttpClient(){
         mNeedAuthentication=false;
@@ -39,6 +46,13 @@ public class HttpClient {
 
     public HttpClient(boolean needAuthentication) {
         mNeedAuthentication=needAuthentication;
+    }
+
+    public void setCacheProtocol(boolean isCached,
+                                 CacheObjectHelper cacheObjectHelper, String keyword) {
+        mCached=isCached;
+        mCacheObjectHelper=cacheObjectHelper;
+        mKeyword=keyword;
     }
 
     public void initRequestProperty(HttpURLConnection conn) {
@@ -53,19 +67,59 @@ public class HttpClient {
         }
     }
 
-    public Object getJson(String url, Class < ? extends Response> clss) throws Exception{
-        HttpURLConnection conn = (HttpURLConnection) (new URL(url).openConnection());
-        initRequestProperty(conn);
-        int responseCode = conn.getResponseCode();
+    private Response getFromCache() {
+        final List<CacheObject> list = mCacheObjectHelper.getCache(mKeyword);
 
-        if(responseCode == HttpURLConnection.HTTP_OK) {
-            InputStream inputStream = new BufferedInputStream(conn.getInputStream());
-            Reader reader = new InputStreamReader(inputStream);
-            Gson gson = new Gson();
-            Object response = gson.fromJson(reader, clss);
+        if(list!=null && list.size() > 0) {
+
+            Response response = new Response() {
+                @Override
+                public Object responseData() {
+                    return list;
+                }
+            };
+
+            return response;
+
+        } else {
+            return null;
+        }
+    }
+
+    public Object getJson(String url, Class < ? extends Response> clss) throws Exception{
+        if(mCached) {
+            Response response = getFromCache();
+            if(response== null) {
+                HttpURLConnection conn = (HttpURLConnection) (new URL(url).openConnection());
+                initRequestProperty(conn);
+                int responseCode = conn.getResponseCode();
+
+                if (responseCode == HttpURLConnection.HTTP_OK) {
+                    InputStream inputStream = new BufferedInputStream(conn.getInputStream());
+                    Reader reader = new InputStreamReader(inputStream);
+                    Gson gson = new Gson();
+                    response = gson.fromJson(reader, clss);
+                    mCacheObjectHelper.addCache(mKeyword,  response);
+                } else {
+                    throw new Exception(conn.getResponseMessage());
+                }
+            }
+
             return response;
         } else {
-            throw new Exception(conn.getResponseMessage());
+            HttpURLConnection conn = (HttpURLConnection) (new URL(url).openConnection());
+            initRequestProperty(conn);
+            int responseCode = conn.getResponseCode();
+
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                InputStream inputStream = new BufferedInputStream(conn.getInputStream());
+                Reader reader = new InputStreamReader(inputStream);
+                Gson gson = new Gson();
+                Response response = gson.fromJson(reader, clss);
+                return response;
+            } else {
+                throw new Exception(conn.getResponseMessage());
+            }
         }
     }
 

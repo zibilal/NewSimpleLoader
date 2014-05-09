@@ -1,20 +1,31 @@
 package com.zibilal.newsimpleloader.app.model;
 
+import com.zibilal.consumeapi.lib.persistence.CacheObject;
+import com.zibilal.consumeapi.lib.persistence.ColumnCache;
 import com.zibilal.newsimpleloader.app.list.adapter.ThumbnailedAdapterHelper;
 
 /**
  * Created by bmuhamm on 4/22/14.
  */
-public class NewsItem2 implements ThumbnailedAdapterHelper.IDataAdapter {
+public class NewsItem2 implements ThumbnailedAdapterHelper.IDataAdapter,
+        CacheObject{
 
+    @ColumnCache(columName = "subtitle")
     private String subtitle;
+    @ColumnCache(columName = "description")
     private String description;
+    @ColumnCache(columName = "reporter")
     private String reporter;
+    @ColumnCache(columName = "title")
     private String title;
+    @ColumnCache(columName = "penulis")
     private String penulis;
+    @ColumnCache(columName = "summary")
     private String summary;
     private Images images;
+    @ColumnCache(columName = "link")
     private String link;
+    @ColumnCache(columName = "editor")
     private String editor;
     private NewsDate newsDate;
 

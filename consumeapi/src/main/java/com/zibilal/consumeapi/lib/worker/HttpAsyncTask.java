@@ -45,52 +45,27 @@ public class HttpAsyncTask extends AsyncTask<String, Integer, Response> {
             type = HttpClient.JSON_TYPE;
         }
 
-        boolean loadFromHttp;
+        try {
+            HttpClient httpClient = new HttpClient(mNeedAuthentication);
 
-        if(mCacheObjectHelper != null && mKeyword != null) {
-
-            final List<CacheObject> list = mCacheObjectHelper.getCache(mKeyword);
-
-            if(list!=null && list.size() > 0) {
-                loadFromHttp=false;
-
-                Response response = new Response() {
-                    @Override
-                    public Object responseData() {
-                        return list;
-                    }
-                };
-
-                return response;
-
+            if(mCacheObjectHelper != null && mKeyword != null){
+                httpClient.setCacheProtocol(true, mCacheObjectHelper, mKeyword);
+            }
+            Response response;
+            if (type.equals(HttpClient.XML_TYPE)) {
+                response = (Response) httpClient.getXml(url, mResponseClass);
+            } else if (type.equals(HttpClient.BYTE_TYPE)) {
+                response = (Response) httpClient.getBytes(url, mResponseClass);
             } else {
-                loadFromHttp=true;
+                response = (Response) httpClient.getJson(url, mResponseClass);
             }
 
-        } else {
-            loadFromHttp=true;
+            return response;
+
+        } catch (Exception e) {
+            Log.e(TAG, "Exception occured: " + e.getMessage());
         }
 
-        if(loadFromHttp) {
-            try {
-                HttpClient httpClient = new HttpClient(mNeedAuthentication);
-                Response response;
-                if (type.equals(HttpClient.XML_TYPE)) {
-                    response = (Response) httpClient.getXml(url, mResponseClass);
-                } else if (type.equals(HttpClient.BYTE_TYPE)) {
-                    response = (Response) httpClient.getBytes(url, mResponseClass);
-                } else {
-                    response = (Response) httpClient.getJson(url, mResponseClass);
-                }
-                if(mCacheObjectHelper != null && mKeyword != null) {
-                    mCacheObjectHelper.addCache(mKeyword, response);
-                }
-                return response;
-
-            } catch (Exception e) {
-                Log.e(TAG, "Exception occured: " + e.getMessage());
-            }
-        }
         return null;
     }
 

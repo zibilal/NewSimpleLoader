@@ -11,6 +11,7 @@ import com.zibilal.consumeapi.lib.network.Response;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.List;
 
@@ -36,31 +37,51 @@ public abstract class CacheObjectHelper {
 
     public abstract List<CacheObject> getCache(String keyword);
 
-    public abstract int addCache(String keyword, Response response, Class<? extends Response> type);
+    public abstract int addCache(String keyword, Response response);
 
-    public  String[] allColumns(CacheObject object) throws Exception {
+    public abstract String getKeywordColumn();
 
-        Class<? extends CacheObject> clss = object.getClass();
-        Field[] fields = clss.getDeclaredFields();
+    public HashMap<String, String> allColumns(Class<? extends CacheObject> clss) throws Exception {
 
-        List<String> columns = new ArrayList<String>();
+       Field[] fields = clss.getDeclaredFields();
+
+        HashMap<String, String> columns = new HashMap<String, String>();
+        columns.put(getKeywordColumn(), "text" );
 
         for(Field field : fields) {
             ColumnCache columnCache = field.getAnnotation(ColumnCache.class);
-            if(columnCache != null) {
-                String sname = columnCache.columName();
-                columns.add(sname);
-            } else {
-                columns.add(field.getName());
+            try {
+                if (columnCache != null) {
+                    String sname = columnCache.columName();
+                    columns.put(sname, mapType(field));
+                } else {
+                    columns.put(field.getName(), mapType(field));
+                }
+            } catch (Exception e) {
+                continue;
             }
         }
 
-        if(columns.size() > 0) {
+        return columns;
+    }
 
-            String[] allColumns = columns.toArray(new String[columns.size()]);
-            return allColumns;
+    public SQLiteDatabase getDatabase(){
+        return mDatabase;
+    }
+
+    public CacheSqliteHelper getHelper(){
+        return mSqlHelper;
+    }
+
+    private String mapType(Field f) throws Exception {
+        if(f.getType().equals(Integer.class) || f.getType().equals(Long.class)) {
+            return "integer";
+        } else if(f.getType().equals(Float.class) || f.getType().equals(Double.class)) {
+            return "real";
+        } else if(f.getType().equals(String.class)) {
+            return "text";
         } else
-            return null;
+            throw new Exception("Unsupported field format " + f.getType());
     }
 
     public  Field getFieldByName(String name, CacheObject object) {
@@ -75,35 +96,39 @@ public abstract class CacheObjectHelper {
         return null;
     }
 
-    public  long saveObject(CacheObject object) throws Exception{
+    public  long saveObject(CacheObject object, String keyword) throws Exception{
         ContentValues values = new ContentValues();
         Class<? extends  CacheObject> clss = object.getClass();
         Method[] methods = clss.getDeclaredMethods();
+
+        values.put(getKeywordColumn(), keyword);
 
         for(Method m : methods) {
             if(m.getName().startsWith("get")) {
                 Object o = m.invoke(object, null);
                 String fieldName = m.getName().substring("get".length(), m.getName().length());
                 Field f = getFieldByName(fieldName, object);
-                ColumnCache columnCache = f.getAnnotation(ColumnCache.class);
-                String key;
-                if(columnCache != null) {
-                    key = columnCache.columName();
-                } else {
-                    key = f.getName();
-                }
+                if(f != null ) {
+                    ColumnCache columnCache = f.getAnnotation(ColumnCache.class);
+                    String key;
+                    if (columnCache != null) {
+                        key = columnCache.columName();
+                    } else {
+                        key = f.getName();
+                    }
 
-                if(o instanceof Integer) {
-                    values.put(key, (Integer) o);
-                } else if(o instanceof String) {
-                    values.put(key, (String) o);
-                } else if(o instanceof Long) {
-                    values.put(key, (Long) o);
+                    if (o instanceof Integer) {
+                        values.put(key, (Integer) o);
+                    } else if (o instanceof String) {
+                        values.put(key, (String) o);
+                    } else if (o instanceof Long) {
+                        values.put(key, (Long) o);
+                    }
                 }
             }
         }
-        SQLiteDatabase db = mSqlHelper.getWritableDatabase();
-        long insertid = db.insert(mSqlHelper.getTableName(), null, values);
+        String tableName = mSqlHelper.getTableName();
+        long insertid = mDatabase.insert(mSqlHelper.getTableName(), null, values);
         return insertid;
     }
 
@@ -123,6 +148,7 @@ public abstract class CacheObjectHelper {
             }
             if(name != null && name.equals(columnName)) {
                 selectedField = field;
+                selectedField.setAccessible(true);
                 break;
             }
         }

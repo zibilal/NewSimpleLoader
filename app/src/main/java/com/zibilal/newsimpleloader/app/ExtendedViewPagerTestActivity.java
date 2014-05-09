@@ -131,7 +131,7 @@ public class ExtendedViewPagerTestActivity extends ActionBarActivity {
                 }
                 mPagerAdapter.notifyDataSetChanged();
             }
-        }, DNReadPhotosJSONResponse.class, true);
+        }, DNReadPhotosJSONResponse.class, true, null, null);
 
         String url="http://android.detik.com/api/news_detail?url=http://foto.detik.com/readfoto/2014/04/28/103406/2567115/548/1/chelsea-tundukan-liverpool-di-anfield";
         worker.execute(url);
@@ -196,7 +196,7 @@ public class ExtendedViewPagerTestActivity extends ActionBarActivity {
                     finalImgView.setImageBitmap(bitmap);
 
                 }
-            }, ResponseRaw.class, false);
+            }, ResponseRaw.class, false, null, null);
             httpAsyncTask.execute(photoDetail.getStory(), HttpClient.BYTE_TYPE);
 
             return imgView;

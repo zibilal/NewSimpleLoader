@@ -147,7 +147,9 @@ public class ThumbnailedAdapterHelper implements BaseAdapterHelper {
                                 }
                             }
                         }, ResponseRaw.class,
-                        false
+                        false,
+                        null,
+                        null
                 );
                 String stemp = (String) temp;
                 httpAsyncTask.execute(stemp, HttpClient.BYTE_TYPE);

@@ -19,7 +19,7 @@ public class MySqliteHelper extends SQLiteOpenHelper {
     // Database creation
     private static final String DATABASE_CREATE=
             String.format("create table %s (%s integer primary key autoincrement, " +
-                    "%s text not null", TABLE_COMMENTS, COLUMN_ID, COLUMN_COMMENT);
+                    "%s text not null)", TABLE_COMMENTS, COLUMN_ID, COLUMN_COMMENT);
 
     // Database delete
     private static final String DATABASE_DROP=

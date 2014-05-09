@@ -1,16 +1,12 @@
 package com.zibilal.newsimpleloader.app.fragments;
 
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
-import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -18,9 +14,7 @@ import com.zibilal.consumeapi.lib.network.HttpClient;
 import com.zibilal.consumeapi.lib.network.Response;
 import com.zibilal.consumeapi.lib.rawbyte.ResponseRaw;
 import com.zibilal.consumeapi.lib.worker.HttpAsyncTask;
-import com.zibilal.newsimpleloader.app.ImageActivity;
 import com.zibilal.newsimpleloader.app.R;
-import com.zibilal.newsimpleloader.app.model.DNImageDetail;
 import com.zibilal.newsimpleloader.app.model.DNPhotoDetail;
 import com.zibilal.newsimpleloader.app.widget.TouchImageView;
 
@@ -74,7 +68,7 @@ public class ScreenSlidePageFragment extends Fragment {
                 mPhotoView.setVisibility(View.VISIBLE);
                 photoProgressBar.setVisibility(View.GONE);
             }
-        }, ResponseRaw.class, false);
+        }, ResponseRaw.class, false, null, null);
         httpAsyncTask.execute(mDetail.getStory(), HttpClient.BYTE_TYPE);
 
         return rootView;

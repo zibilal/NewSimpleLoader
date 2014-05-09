@@ -7,11 +7,9 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.HeaderViewListAdapter;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -92,7 +90,7 @@ public class EndlessListView extends ListView implements AbsListView.OnScrollLis
                     Log.e("EndlessListView", "Exception occured while trying to load a thumbnail");
                 }
             }
-        }, ResponseRaw.class, false);
+        }, ResponseRaw.class, false, null, null);
         worker.execute(model.getThumbnailUrl(), HttpClient.BYTE_TYPE);
         addHeaderView(mHeader);
     }

@@ -17,7 +17,6 @@ import com.zibilal.consumeapi.lib.worker.HttpAsyncTask;
 import com.zibilal.newsimpleloader.app.fragments.ScreenSlidePageFragment;
 import com.zibilal.newsimpleloader.app.model.DNPhotoDetail;
 import com.zibilal.newsimpleloader.app.model.DNReadPhotosJSONResponse;
-import com.zibilal.newsimpleloader.app.widget.ZoomOutPageTransformer;
 
 import java.util.List;
 
@@ -107,7 +106,7 @@ public class ScreenSlideActivity extends ActionBarActivity {
                 }
                 mPagerAdapter.notifyDataSetChanged();
             }
-        }, DNReadPhotosJSONResponse.class, true);
+        }, DNReadPhotosJSONResponse.class, true, null, null);
         String url="http://android.detik.com/api/news_detail?url=http://foto.detik.com/readfoto/2014/04/28/103406/2567115/548/1/chelsea-tundukan-liverpool-di-anfield";
         worker.execute(url);
     }
